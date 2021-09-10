@@ -30,8 +30,8 @@ class Vehicle(models.Model):
             True
             for _ in range(self.vehicle_type.max_capacity)
         ]
-        empty_seats = self.vehicle_type.max_capacity - self.passengers
-        for index in range(empty_seats):
+        _empty_seats = self.vehicle_type.max_capacity - self.passengers
+        for index in range(_empty_seats):
             seat_distribution[index] = False
 
         seat_distribution = np.array_split(
@@ -51,6 +51,9 @@ class Journey(models.Model):
 
     def __str__(self) -> str:
         return f"{self.vehicle.name} ({self.start} - {self.end})"
+
+    def is_finished(self) -> bool:
+        return self.end != None
 
 
 def validate_number_plate(plate: str) -> bool:
