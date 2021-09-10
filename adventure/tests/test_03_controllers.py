@@ -72,7 +72,7 @@ class TestStartJourneyAPIView:
 
 
 class TestStopJourneyAPIView:
-    def test_stop(self):
+    def test_stop(self, client, mocker):
         # TODO: Implement an endpoint that makes use of a StopJourney use case
         # and tests it
         pass

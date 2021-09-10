@@ -43,3 +43,10 @@ class StartJourneyAPIView(generics.CreateAPIView):
 
     def get_repository(self) -> repositories.JourneyRepository:
         return repositories.JourneyRepository()
+
+
+class StopJourneyAPIView(generics.CreateAPIView):
+    serializer_class = serializers.JourneySerializer
+
+    def perform_create(self, serializer):
+        pass
