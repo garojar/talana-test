@@ -1,6 +1,7 @@
 from django.db import models
 from math import ceil
 import numpy as np
+import re
 # Create your models here.
 
 
@@ -37,7 +38,7 @@ class Vehicle(models.Model):
             list(reversed(seat_distribution))
             ,ceil(self.vehicle_type.max_capacity/2)
         )
-        
+
         return [
             list(pair)
             for pair in seat_distribution
@@ -50,3 +51,7 @@ class Journey(models.Model):
 
     def __str__(self) -> str:
         return f"{self.vehicle.name} ({self.start} - {self.end})"
+
+
+def validate_number_plate(plate: str) -> bool:
+    return re.search("[A-Z]{2}-[0-9]{2}-[0-9]{2}",plate)
