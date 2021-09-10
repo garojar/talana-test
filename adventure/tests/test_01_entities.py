@@ -62,12 +62,20 @@ class TestVehicle:
         # a valid number plate consists of three pairs of alphanumeric chars separated by hyphen
         # the first pair must be letters and the rest must be numbers
         # e.g: AA-12-34
-        assert models.validate_number_plate("AA-12-34")
-        assert not models.validate_number_plate("AA-BB-34")
-        assert not models.validate_number_plate("12-34-56")
-        assert not models.validate_number_plate("AA1234")
-        assert not models.validate_number_plate("AA 12 34")
+        vehicle = models.Vehicle(number_plate="AA-12-34")
+        assert vehicle.validate_number_plate()
 
+        vehicle = models.Vehicle(number_plate="AA-BB-34")
+        assert not vehicle.validate_number_plate()
+
+        vehicle = models.Vehicle(number_plate="12-34-56")
+        assert not vehicle.validate_number_plate()
+
+        vehicle = models.Vehicle(number_plate="AA1234")
+        assert not vehicle.validate_number_plate()
+
+        vehicle = models.Vehicle(number_plate="AA 12 34")
+        assert not vehicle.validate_number_plate()
 
 
 class TestJourney:

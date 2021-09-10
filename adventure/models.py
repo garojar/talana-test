@@ -44,6 +44,9 @@ class Vehicle(models.Model):
             for pair in seat_distribution
         ]
 
+    def validate_number_plate(self) -> bool:
+        return re.search("[A-Z]{2}-[0-9]{2}-[0-9]{2}",self.number_plate)
+
 class Journey(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.PROTECT)
     start = models.DateField()
@@ -55,6 +58,3 @@ class Journey(models.Model):
     def is_finished(self) -> bool:
         return self.end != None
 
-
-def validate_number_plate(plate: str) -> bool:
-    return re.search("[A-Z]{2}-[0-9]{2}-[0-9]{2}",plate)
