@@ -1,4 +1,5 @@
 from django.db import models
+from math import ceil
 import numpy as np
 # Create your models here.
 
@@ -25,13 +26,22 @@ class Vehicle(models.Model):
 
     def get_distribution(self) -> []:
         seat_distribution = [
-            [True,True]
-            for _ in range(int(self.vehicle_type.max_capacity/2))
+            True
+            for _ in range(self.vehicle_type.max_capacity)
         ]
-        if self.vehicle_type.max_capacity % 2 == 1:
-            seat_distribution.append([True,False])
+        empty_seats = self.vehicle_type.max_capacity - self.passengers
+        for index in range(empty_seats):
+            seat_distribution[index] = False
 
-        return seat_distribution
+        seat_distribution = np.array_split(
+            list(reversed(seat_distribution))
+            ,ceil(self.vehicle_type.max_capacity/2)
+        )
+        
+        return [
+            list(pair)
+            for pair in seat_distribution
+        ]
 
 class Journey(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.PROTECT)
